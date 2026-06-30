@@ -57,7 +57,6 @@ export interface Filter {
   form: CamperForm | "";
   transmission: CamperTransmission | "";
   engine: CamperEngine | "";
-  // Всі зручності як булеві значення для чекбоксів
   ac: boolean;
   bathroom: boolean;
   kitchen: boolean;

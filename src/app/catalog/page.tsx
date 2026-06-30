@@ -1,11 +1,21 @@
 "use client";
 
+import CampersFilter from "@/components/CampersFilter/CampersFilter";
+import { Filter } from "@/types/camper";
 import { useInfiniteQuery } from "@tanstack/react-query";
+import { useState } from "react";
 import CamperCard from "../../components/CamperCard/CamperCard";
 import { getCampers } from "../../lib/api";
 import styles from "./Catalog.module.css";
 
 export default function CatalogPage() {
+  const [activeFilters, setActiveFilters] = useState<Filter | null>(null);
+
+  // 2. Створюємо ту саму функцію, яку шукає React
+  const handleApplyFilters = (newFilters: Filter) => {
+    setActiveFilters(newFilters);
+  };
+
   const {
     data,
     fetchNextPage,
@@ -48,6 +58,10 @@ export default function CatalogPage() {
     <main className="container mx-auto py-10">
       <div className="grid gap-8">
         {/* Рендеримо всі сторінки, що прийшли з API */}
+        {/* ЛІВА ЧАСТИНА: Блок з фільтрами */}
+        <aside className={styles.aside}>
+          <CampersFilter onSearch={handleApplyFilters} />
+        </aside>
         {data?.pages.map((group: any, i: number) => (
           <div key={i}>
             {/* Додаємо .slice(0, 4), щоб гарантовано залишати лише 4 картки на кожній сторінці */}
@@ -60,7 +74,7 @@ export default function CatalogPage() {
 
       {/* Кнопка Load More */}
       {hasNextPage && (
-        <div className="mt-10 flex justify-center">
+        <div>
           <button
             className={styles.loadMoreBtn}
             onClick={() => fetchNextPage()}
