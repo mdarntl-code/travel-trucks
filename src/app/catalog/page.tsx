@@ -3,17 +3,24 @@
 import CampersFilter from "@/components/CampersFilter/CampersFilter";
 import { Filter } from "@/types/camper";
 import { useInfiniteQuery } from "@tanstack/react-query";
-import { useState } from "react";
+import React, { useState } from "react";
 import CamperCard from "../../components/CamperCard/CamperCard";
 import { getCampers } from "../../lib/api";
 import styles from "./Catalog.module.css";
 
 export default function CatalogPage() {
-  const [activeFilters, setActiveFilters] = useState<Filter | null>(null);
+  const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
 
-  // 2. Створюємо ту саму функцію, яку шукає React
   const handleApplyFilters = (newFilters: Filter) => {
-    setActiveFilters(newFilters);
+    const cleanFilters: Record<string, any> = {};
+
+    Object.entries(newFilters).forEach(([key, value]) => {
+      if (value !== "" && value !== false) {
+        cleanFilters[key] = value;
+      }
+    });
+
+    setActiveFilters(cleanFilters);
   };
 
   const {
@@ -25,19 +32,14 @@ export default function CatalogPage() {
     isError,
     error,
   } = useInfiniteQuery({
-    queryKey: ["campers"],
-    // 1. Додаємо значення за замовчуванням = 1 для pageParam
-    // 2. Перетворюємо pageParam на Number, щоб уникнути NaN в URL
-    queryFn: ({ pageParam = 1 }) => getCampers(Number(pageParam), 4),
-
+    queryKey: ["campers", activeFilters],
+    queryFn: ({ pageParam = 1 }) =>
+      getCampers(Number(pageParam), 4, activeFilters),
     initialPageParam: 1,
-
     getNextPageParam: (lastPage: any, allPages) => {
-      // Якщо даних немає або прийшло менше 4 - це кінець
       if (!lastPage || !lastPage.campers || lastPage.campers.length < 4) {
         return undefined;
       }
-      // Повертаємо номер наступної сторінки на основі кількості вже завантажених
       return allPages.length + 1;
     },
   });
@@ -54,36 +56,56 @@ export default function CatalogPage() {
     );
   }
 
-  return (
-    <main className="container mx-auto py-10">
-      <div className="grid gap-8">
-        {/* Рендеримо всі сторінки, що прийшли з API */}
-        {/* ЛІВА ЧАСТИНА: Блок з фільтрами */}
-        <aside className={styles.aside}>
-          <CampersFilter onSearch={handleApplyFilters} />
-        </aside>
-        {data?.pages.map((group: any, i: number) => (
-          <div key={i}>
-            {/* Додаємо .slice(0, 4), щоб гарантовано залишати лише 4 картки на кожній сторінці */}
-            {group.campers?.slice(0, 4).map((camper: any) => (
-              <CamperCard key={camper.id} camper={camper} />
-            ))}
-          </div>
-        ))}
-      </div>
+  // Перевірка: чи прийшов порожній масив з бекенду?
+  const hasNoCampers =
+    !isLoading &&
+    (!data?.pages[0]?.campers || data.pages[0].campers.length === 0);
 
-      {/* Кнопка Load More */}
-      {hasNextPage && (
-        <div>
-          <button
-            className={styles.loadMoreBtn}
-            onClick={() => fetchNextPage()}
-            disabled={isFetchingNextPage}
-          >
-            {isFetchingNextPage ? "Завантаження..." : "Load more"}
-          </button>
-        </div>
-      )}
+  return (
+    <main className={styles.catalogContainer}>
+      {/* ЛІВА КОЛОНКА: Сайдбар (зверни увагу, він не в div) */}
+      <aside className={styles.sidebarWrapper}>
+        <CampersFilter onSearch={handleApplyFilters} />
+      </aside>
+
+      {/* ПРАВА КОЛОНКА: Список кемперів або напис "Нічого не знайдено" */}
+      <div className={styles.listWrapper}>
+        {hasNoCampers ? (
+          <div className={styles.noResults}>
+            <h3>No campers found 🏕️</h3>
+            <p>
+              We couldn't find any campers matching your filters. Try changing
+              them!
+            </p>
+          </div>
+        ) : (
+          <>
+            <div className={styles.cardsContainer}>
+              {data?.pages.map((group: any, i: number) => (
+                // ВАЖЛИВО: Використовуємо React.Fragment замість div
+                <React.Fragment key={i}>
+                  {group.campers?.slice(0, 4).map((camper: any) => (
+                    <CamperCard key={camper.id} camper={camper} />
+                  ))}
+                </React.Fragment>
+              ))}
+            </div>
+
+            {/* Кнопка Load More лежить під картками, у правій колонці */}
+            {hasNextPage && (
+              <div className={styles.loadMoreWrapper}>
+                <button
+                  className={styles.loadMoreBtn}
+                  onClick={() => fetchNextPage()}
+                  disabled={isFetchingNextPage}
+                >
+                  {isFetchingNextPage ? "Loading..." : "Load more"}
+                </button>
+              </div>
+            )}
+          </>
+        )}
+      </div>
     </main>
   );
 }

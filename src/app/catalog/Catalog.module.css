@@ -16,3 +16,26 @@
 .loadMoreBtn:hover {
   border-color: var(--color-muted);
 }
+
+.catalogContainer {
+  display: flex;
+  gap: 65px;
+  align-items: flex-start;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 48px 64px;
+}
+
+.cardsContainer {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+}
+
+.loadMoreWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin-top: 40px;
+}

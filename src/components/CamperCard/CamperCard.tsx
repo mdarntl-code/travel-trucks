@@ -9,18 +9,18 @@ interface CamperProps {
     price: number;
     rating: number;
     coverImage: string;
-    reviews?: {
-      comment: string;
-      reviewer_name: string;
-      reviewer_rating: number;
-    }[];
+    engine: string;
+    transmission: string;
+    form: string;
+    totalReviews?: number;
     location: string;
-    description?: string; // Додали ?
-    gallery?: { thumb: string; original: string }[]; // Додали ?
+    description?: string;
+    gallery?: { thumb: string; original: string }[];
   };
 }
 
 export default function CamperCard({ camper }: CamperProps) {
+  console.log(`Кемпер ${camper.name}:`, camper);
   const image = camper.coverImage || "/photo/hero-bg.jpg";
 
   return (
@@ -46,14 +46,13 @@ export default function CamperCard({ camper }: CamperProps) {
               aria-hidden="true"
             >
               <use href="/icons/sprite.svg#icon-star" />
-            </svg>{" "}
-            {camper.rating} ({camper.reviews ? camper.reviews.length : 0}{" "}
-            Reviews)
+            </svg>
+            {camper.rating} ({camper.totalReviews || 0} Reviews)
           </span>
           <span className={styles.location}>
             <svg width="16" height="16" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-map" />
-            </svg>{" "}
+            </svg>
             {camper.location}
           </span>
         </div>
@@ -68,20 +67,20 @@ export default function CamperCard({ camper }: CamperProps) {
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-icon2" />
-            </svg>{" "}
-            Petrol
+            </svg>
+            {camper.engine}
           </span>
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-icon1" />
-            </svg>{" "}
-            Automatic
+            </svg>
+            {camper.transmission}
           </span>
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-car" />
-            </svg>{" "}
-            Alcove
+            </svg>
+            {camper.form}
           </span>
         </div>
 

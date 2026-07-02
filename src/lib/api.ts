@@ -20,7 +20,7 @@ export const getCampers = async (
     params: {
       page,
       limit,
-      ...filters, // Сюди ми передамо об'єкт з вибраними фільтрами
+      ...filters,
     },
   });
   return data;
