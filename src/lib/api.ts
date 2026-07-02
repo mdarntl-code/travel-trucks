@@ -4,6 +4,7 @@ import {
   Camper,
   CampersResponse,
   Filter,
+  Review,
 } from "../types/camper";
 
 const api = axios.create({
@@ -29,6 +30,12 @@ export const getCampers = async (
 // 2. Отримати одного кемпера по ID
 export const getCamperById = async (id: string): Promise<Camper> => {
   const { data } = await api.get(`/campers/${id}`);
+  return data;
+};
+
+// Додай до вже існуючих функцій
+export const getCamperReviews = async (id: string): Promise<Review[]> => {
+  const { data } = await api.get(`/campers/${id}/reviews`);
   return data;
 };
 

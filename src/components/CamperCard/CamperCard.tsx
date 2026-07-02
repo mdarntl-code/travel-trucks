@@ -20,7 +20,6 @@ interface CamperProps {
 }
 
 export default function CamperCard({ camper }: CamperProps) {
-  console.log(`Кемпер ${camper.name}:`, camper);
   const image = camper.coverImage || "/photo/hero-bg.jpg";
 
   return (
