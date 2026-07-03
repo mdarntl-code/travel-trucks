@@ -5,6 +5,7 @@ import { Filter } from "@/types/camper";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import CamperCard from "../../components/CamperCard/CamperCard";
+import Loader from "../../components/Loader/Loader";
 import { getCampers } from "../../lib/api";
 import styles from "./Catalog.module.css";
 
@@ -44,10 +45,6 @@ export default function CatalogPage() {
     },
   });
 
-  if (isLoading) {
-    return <div className="text-center py-20">Завантажуємо кемпери...</div>;
-  }
-
   if (isError) {
     return (
       <div className="text-center py-20 text-red-500">
@@ -56,21 +53,20 @@ export default function CatalogPage() {
     );
   }
 
-  // Перевірка: чи прийшов порожній масив з бекенду?
   const hasNoCampers =
     !isLoading &&
     (!data?.pages[0]?.campers || data.pages[0].campers.length === 0);
 
   return (
     <main className={styles.catalogContainer}>
-      {/* ЛІВА КОЛОНКА: Сайдбар (зверни увагу, він не в div) */}
       <aside className={styles.sidebarWrapper}>
         <CampersFilter onSearch={handleApplyFilters} />
       </aside>
 
-      {/* ПРАВА КОЛОНКА: Список кемперів або напис "Нічого не знайдено" */}
       <div className={styles.listWrapper}>
-        {hasNoCampers ? (
+        {isLoading ? (
+          <Loader />
+        ) : hasNoCampers ? (
           <div className={styles.noResults}>
             <h3>No campers found 🏕️</h3>
             <p>
@@ -82,7 +78,6 @@ export default function CatalogPage() {
           <>
             <div className={styles.cardsContainer}>
               {data?.pages.map((group: any, i: number) => (
-                // ВАЖЛИВО: Використовуємо React.Fragment замість div
                 <React.Fragment key={i}>
                   {group.campers?.slice(0, 4).map((camper: any) => (
                     <CamperCard key={camper.id} camper={camper} />
@@ -91,7 +86,6 @@ export default function CatalogPage() {
               ))}
             </div>
 
-            {/* Кнопка Load More лежить під картками, у правій колонці */}
             {hasNextPage && (
               <div className={styles.loadMoreWrapper}>
                 <button

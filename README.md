@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🚐 TravelTrucks
 
-## Getting Started
+TravelTrucks — це сучасний вебдодаток для пошуку та бронювання кемперів (будинків на колесах). Проєкт створений для мандрівників, які шукають ідеальний транспорт для своїх подорожей, надаючи зручний каталог з фільтрами, детальні описи транспортних засобів та можливість швидкого бронювання.
 
-First, run the development server:
+## ✨ Основні функції
+
+- **Каталог кемперів:** Зручний перегляд усіх доступних автомобілів з підтримкою пагінації.
+- **Система фільтрації:** Пошук ідеального кемпера за типом кузова, наявністю зручностей та типом трансмісії.
+- **Детальна сторінка кемпера:** Інформативна галерея фотографій, технічні характеристики та відгуки користувачів.
+- **Бронювання:** Інтерактивна форма для швидкого бронювання обраного кемпера з валідацією даних.
+
+## 🛠 Технологічний стек
+
+- **Фреймворк:** [Next.js](https://nextjs.org/) (App Router) / React
+- **Стилізація:** CSS Modules
+- **Робота з даними:** [React Query (@tanstack/react-query)](https://tanstack.com/query/latest)
+- **Карусель/Слайдер:** [Swiper](https://swiperjs.com/)
+- **Форми та валідація:** React Hook Form, Yup
+- **Сповіщення:** React Hot Toast
+
+## 🚀 Інструкція зі встановлення та використання
+
+Щоб запустити цей проєкт локально на своєму комп'ютері, дотримуйтесь цих кроків:
+
+### 1. Клонування репозиторію
+
+Відкрийте термінал та скопіюйте команду:
+
+```bash
+git clone git@github.com:mdarntl-code/travel-trucks.git
+cd TravelTrucks
+```
+
+### 2. Встановлення залежностей
+
+Переконайтеся, що у вас встановлений Node.js, та виконайте:
+
+```bash
+npm install
+```
+
+### 3. Запуск сервера для розробки
+
+Запустіть проєкт командою:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Після цього відкрийте [http://localhost:3000](http://localhost:3000) у вашому браузері.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### 4. Збірка для продакшену
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Для підготовки проєкту до деплою:
 
-## Learn More
+```bash
+npm run build
+npm run start
+```
 
-To learn more about Next.js, take a look at the following resources:
+## 👨‍💻 Інформація про автора
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Автор:** Marta Danyliuk
+- **LinkedIn:** [marta-danyliuk](https://www.linkedin.com/in/marta-danyliuk/)
+- **GitHub:** [mdarntl-code](https://github.com/mdarntl-code)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+---
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+_Проєкт створено як частина професійного портфоліо._

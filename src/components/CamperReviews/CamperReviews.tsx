@@ -12,33 +12,38 @@ export default function CamperReviews({ reviews }: CamperReviewsProps) {
 
   return (
     <div className={styles.container}>
+      <h3 className={styles.title}>Reviews</h3>
       <ul className={styles.list}>
         {reviews.map((review, index) => (
           <li key={index} className={styles.item}>
-            <div className={styles.avatar}>
-              {review.reviewer_name.charAt(0).toUpperCase()}
-            </div>
+            {/* Обгортка для аватарки та імені з зірочками */}
+            <div className={styles.reviewerBlock}>
+              <div className={styles.avatar}>
+                {review.reviewer_name.charAt(0).toUpperCase()}
+              </div>
 
-            <div className={styles.header}>
-              <h4 className={styles.name}>{review.reviewer_name}</h4>
-
-              <div className={styles.rating}>
-                {[1, 2, 3, 4, 5].map((star) => (
-                  <svg
-                    key={star}
-                    className={
-                      star <= review.reviewer_rating
-                        ? styles.starFilled
-                        : styles.starEmpty
-                    }
-                    width="16"
-                    height="16"
-                  >
-                    <use href="/sprite.svg#icon-star" />
-                  </svg>
-                ))}
+              <div className={styles.header}>
+                <h4 className={styles.name}>{review.reviewer_name}</h4>
+                <div className={styles.rating}>
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <svg
+                      key={star}
+                      className={
+                        star <= review.reviewer_rating
+                          ? styles.starFilled
+                          : styles.starEmpty
+                      }
+                      width="16"
+                      height="16"
+                    >
+                      <use href="/icons/sprite.svg#icon-star" />
+                    </svg>
+                  ))}
+                </div>
               </div>
             </div>
+
+            {/* Коментар іде під усім блоком */}
             <p className={styles.comment}>{review.comment}</p>
           </li>
         ))}

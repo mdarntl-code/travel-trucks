@@ -20,3 +20,14 @@
   flex-direction: column;
   gap: 24px;
 }
+
+.bottomSection {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+}
+
+.bottomSection .rightColumn {
+  flex-shrink: 0;
+  margin-top: 56px;
+}

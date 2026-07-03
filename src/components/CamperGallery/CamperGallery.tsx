@@ -37,6 +37,10 @@ export default function CamperGallery({
     );
   }
 
+  // Динамічно перевіряємо, чи достатньо слайдів для створення нескінченної петлі
+  const canLoopMain = gallery.length > 1;
+  const canLoopThumbs = gallery.length > 4; // Бо slidesPerView дорівнює 4
+
   return (
     <div className={styles.galleryContainer}>
       {/* --- ГОЛОВНИЙ СЛАЙДЕР --- */}
@@ -47,7 +51,7 @@ export default function CamperGallery({
             "--swiper-pagination-color": "#fff",
           } as React.CSSProperties
         }
-        loop={true}
+        loop={canLoopMain} // Використовуємо динамічне значення
         spaceBetween={10}
         navigation={true}
         thumbs={{
@@ -70,7 +74,7 @@ export default function CamperGallery({
       {/* --- НИЖНІЙ СЛАЙДЕР (Мініатюри) --- */}
       <Swiper
         onSwiper={setThumbsSwiper}
-        loop={true}
+        loop={canLoopThumbs} // Використовуємо динамічне значення
         spaceBetween={24}
         slidesPerView={4}
         freeMode={true}
@@ -80,7 +84,6 @@ export default function CamperGallery({
       >
         {gallery.map((item, index) => (
           <SwiperSlide key={index}>
-            {/* МАГІЯ ТУТ: Ми додали власну обгортку всередину слайда! */}
             <div className={styles.thumbWrapper}>
               <img
                 src={item.thumb}

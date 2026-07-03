@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
 import Header from "../components/Header/Header";
 import QueryProvider from "../components/QueryProvider/QueryProvider";
 import "./globals.css";
@@ -26,6 +27,7 @@ export default function RootLayout({
           <Header />
           {children}
         </QueryProvider>
+        <Toaster position="top-center" reverseOrder={false} />
       </body>
     </html>
   );

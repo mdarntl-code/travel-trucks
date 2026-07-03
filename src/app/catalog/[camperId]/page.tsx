@@ -5,11 +5,11 @@ import { useQuery } from "@tanstack/react-query";
 import { useParams } from "next/navigation";
 import styles from "./CamperDetails.module.css";
 
+import BookingForm from "@/components/BookingForm/BookingForm";
 import CamperFeatures from "../../../components/CamperFeatures/CamperFeatures";
 import CamperGallery from "../../../components/CamperGallery/CamperGallery";
 import CamperInfo from "../../../components/CamperInfo/CamperInfo";
 import CamperReviews from "../../../components/CamperReviews/CamperReviews";
-// import BookingForm from "../../../components/BookingForm/BookingForm";
 
 export default function CamperDetailsPage() {
   const { camperId } = useParams();
@@ -64,7 +64,7 @@ export default function CamperDetailsPage() {
         </div>
 
         <div className={styles.rightColumn}>
-          {/* <BookingForm camperId={camper.id} /> */}
+          <BookingForm camperId={camper.id} />
         </div>
       </section>
     </main>
