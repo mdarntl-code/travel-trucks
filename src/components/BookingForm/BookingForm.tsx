@@ -46,37 +46,53 @@ export default function BookingForm({ camperId }: BookingFormProps) {
 
       <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
         <div className={styles.inputs}>
+          {/* Поле Name */}
           <div className={styles.inputWrapper}>
-            <input
-              type="text"
-              placeholder="Name*"
-              className={styles.input}
-              {...nameField}
-              onFocus={(e) => (e.target.placeholder = "Name")}
-              onBlur={(e) => {
-                e.target.placeholder = "Name*";
-                nameField.onBlur(e);
-              }}
-            />
+            <div className={styles.inputInner}>
+              <input
+                id="name"
+                type="text"
+                placeholder=" "
+                className={`${styles.input} ${errors.name ? styles.inputError : ""}`}
+                {...nameField}
+              />
+              <label htmlFor="name" className={`${styles.label} ${errors.name ? styles.labelError : ""}`}>
+                Name*
+              </label>
+              {/* SVG іконка для поля Name */}
+              {errors.name && (
+                <svg className={styles.errorIcon} width="20" height="20">
+                  <use href="/icons/sprite.svg#icon-error" />
+                </svg>
+              )}
+            </div>
             {errors.name && (
-              <span className={styles.error}>{errors.name.message}</span>
+              <span className={styles.errorMessage}>{errors.name.message}</span>
             )}
           </div>
 
+          {/* Поле Email */}
           <div className={styles.inputWrapper}>
-            <input
-              type="email"
-              placeholder="Email*"
-              className={styles.input}
-              {...emailField}
-              onFocus={(e) => (e.target.placeholder = "Email")}
-              onBlur={(e) => {
-                e.target.placeholder = "Email*";
-                emailField.onBlur(e);
-              }}
-            />
+            <div className={styles.inputInner}>
+              <input
+                id="email"
+                type="email"
+                placeholder=" "
+                className={`${styles.input} ${errors.email ? styles.inputError : ""}`}
+                {...emailField}
+              />
+              <label htmlFor="email" className={`${styles.label} ${errors.email ? styles.labelError : ""}`}>
+                Email*
+              </label>
+              {/* SVG іконка для поля Email */}
+              {errors.email && (
+                <svg className={styles.errorIcon} width="20" height="20">
+                  <use href="/icons/sprite.svg#icon-error" />
+                </svg>
+              )}
+            </div>
             {errors.email && (
-              <span className={styles.error}>{errors.email.message}</span>
+              <span className={styles.errorMessage}>{errors.email.message}</span>
             )}
           </div>
         </div>

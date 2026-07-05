@@ -1,16 +1,19 @@
 "use client";
 
-import CampersFilter from "@/components/CampersFilter/CampersFilter";
+import CampersFilter from "../../components/CampersFilter/CampersFilter";
 import { Filter } from "@/types/camper";
 import { useInfiniteQuery } from "@tanstack/react-query";
 import React, { useState } from "react";
 import CamperCard from "../../components/CamperCard/CamperCard";
 import Loader from "../../components/Loader/Loader";
+import NoCampersFound from "../../components/NoCampersFound/NoCampersFound";
 import { getCampers } from "../../lib/api";
 import styles from "./Catalog.module.css";
 
 export default function CatalogPage() {
   const [activeFilters, setActiveFilters] = useState<Record<string, any>>({});
+
+  const [resetKey, setResetKey] = useState(0);
 
   const handleApplyFilters = (newFilters: Filter) => {
     const cleanFilters: Record<string, any> = {};
@@ -22,6 +25,11 @@ export default function CatalogPage() {
     });
 
     setActiveFilters(cleanFilters);
+  };
+
+  const handleResetFilters = () => {
+    setActiveFilters({});
+    setResetKey((prev) => prev + 1);
   };
 
   const {
@@ -60,20 +68,17 @@ export default function CatalogPage() {
   return (
     <main className={styles.catalogContainer}>
       <aside className={styles.sidebarWrapper}>
-        <CampersFilter onSearch={handleApplyFilters} />
+        <CampersFilter key={resetKey} onSearch={handleApplyFilters} />
       </aside>
 
       <div className={styles.listWrapper}>
         {isLoading ? (
           <Loader />
         ) : hasNoCampers ? (
-          <div className={styles.noResults}>
-            <h3>No campers found 🏕️</h3>
-            <p>
-              We couldn't find any campers matching your filters. Try changing
-              them!
-            </p>
-          </div>
+          <NoCampersFound
+            onClearFilters={handleResetFilters}
+            onViewAll={handleResetFilters}
+          />
         ) : (
           <>
             <div className={styles.cardsContainer}>

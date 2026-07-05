@@ -3,7 +3,9 @@
   border-radius: 16px;
   padding: 44px;
   width: 641px;
-  height: 382px;
+  /* Забираємо жорстку висоту, дозволяючи формі розтягуватися */
+  min-height: 382px;
+  height: max-content;
 }
 
 .title {
@@ -29,10 +31,27 @@
   margin-bottom: 24px;
 }
 
+.inputWrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+/* Обгортка для позиціонування іконки всередині інпуту */
+.inputInner {
+  position: relative;
+  width: 100%;
+  max-width: 527px;
+}
+
 .input {
   border-radius: 12px;
   padding: 18px;
-  width: 527px;
+  /* Робимо паддінг справа більшим, щоб текст не наїжджав на іконку */
+  padding-right: 48px;
+  width: 100%;
+  /* Замість 527px, нехай займає всю ширину обгортки */
+  max-width: 527px;
   height: 60px;
   background-color: var(--color-background-light);
   outline: none;
@@ -40,6 +59,62 @@
   font-size: 16px;
   line-height: 1.5;
   color: var(--color-gray);
+  border: 1px solid transparent;
+  transition: all 0.3s ease;
+  box-sizing: border-box;
+}
+
+.label {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: var(--color-gray);
+  pointer-events: none;
+  transition: all 0.2s ease;
+  background-color: transparent;
+  padding: 0 4px;
+}
+
+.input:focus~.label,
+.input:not(:placeholder-shown)~.label {
+  top: 0;
+  font-size: 12px;
+  line-height: 1.2;
+  /* Градієнт, щоб верхня половина зливалася з формою, а нижня - з інпутом */
+  background: linear-gradient(to bottom, var(--color-white) 50%, var(--color-background-light) 50%);
+}
+
+.input:focus~.label {
+  color: var(--color-main);
+}
+
+.labelError {
+  color: #e44848 !important;
+}
+
+.inputError {
+  background-color: #ffdfdf;
+  border-color: #e44848;
+}
+
+.inputError:focus~.label,
+.inputError:not(:placeholder-shown)~.label {
+  background: linear-gradient(to bottom, var(--color-white) 50%, #ffdfdf 50%);
+}
+
+.errorIcon {
+  position: absolute;
+  right: 18px;
+  top: 50%;
+  transform: translateY(-50%);
+  pointer-events: none;
+}
+
+.errorMessage {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #e44848;
 }
 
 .input:focus::placeholder {
@@ -49,7 +124,8 @@
 .submitBtn {
   border-radius: 200px;
   padding: 16px 60px;
-  width: 527px;
+  width: 100%;
+  max-width: 527px;
   height: 56px;
   background-color: var(--color-secondary);
   font-weight: 500;

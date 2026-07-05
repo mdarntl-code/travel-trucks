@@ -21,7 +21,7 @@
   font-size: 48px;
   line-height: 1.2;
   color: var(--color-background-light);
-  padding-bottom: 16px;
+  margin-bottom: 8px;
 }
 
 .subtitle {
@@ -29,7 +29,7 @@
   font-size: 24px;
   line-height: 1.33;
   color: var(--color-background-light);
-  padding-bottom: 40px;
+  margin-bottom: 40px;
 }
 
 .button {
@@ -45,6 +45,7 @@
   color: var(--color-white);
   padding: 16px 48px;
   transition: background-color 0.3s ease-in-out;
+  display: inline-block;
 }
 
 .button:hover,
