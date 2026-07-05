@@ -13,6 +13,7 @@ export default function Header() {
             width={136}
             height={16}
             priority
+            className={styles.logo}
           />
         </Link>
 

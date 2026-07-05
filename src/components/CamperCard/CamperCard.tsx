@@ -1,7 +1,6 @@
 import Link from "next/link";
 import styles from "./CamperCard.module.css";
 
-// Описуємо структуру даних, яка приходить з бекенду
 interface CamperProps {
   camper: {
     id: string;
@@ -24,12 +23,10 @@ export default function CamperCard({ camper }: CamperProps) {
 
   return (
     <article className={styles.card}>
-      {/* Ліва частина: РЕАЛЬНА Картинка з API */}
       <div className={styles.imageWrapper}>
         <img src={image} alt={camper.name} className={styles.image} />
       </div>
 
-      {/* Права частина: Інформація */}
       <div className={styles.info}>
         <div className={styles.header}>
           <h2 className={styles.title}>{camper.name}</h2>
@@ -61,7 +58,6 @@ export default function CamperCard({ camper }: CamperProps) {
             ? camper.description.substring(0, 60) + "..."
             : "No description available"}
         </p>
-        {/* Теги поки що заглушки, але скоро ми їх теж зробимо динамічними */}
         <div className={styles.tags}>
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
@@ -83,7 +79,6 @@ export default function CamperCard({ camper }: CamperProps) {
           </span>
         </div>
 
-        {/* ВИМОГА: Кнопка відкриває деталі в новій вкладці */}
         <Link
           href={`/catalog/${camper.id}`}
           target="_blank"

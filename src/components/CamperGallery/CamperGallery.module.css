@@ -22,32 +22,23 @@
   width: 100%;
 }
 
-/* 1. Стилізуємо нашу нову обгортку (робимо її напівпрозорою) */
-
 .thumbWrapper {
   width: 100%;
   height: 144px;
   border-radius: 16px;
   overflow: hidden;
   border: 2px solid transparent;
-  /* Невидима рамка */
   opacity: 0.4;
-  /* Блюр */
   cursor: pointer;
   transition: all 0.3s ease;
   box-sizing: border-box;
 }
 
-/* 2. Ловимо момент, коли Swiper робить слайд активним, і стилізуємо нашу обгортку всередині нього */
-
-:global(.swiper-slide-thumb-active) .thumbWrapper {
-  opacity: 1;
-  /* Робимо яскравою */
-  border-color: #e44848;
-  /* Червона рамка */
+/* Наш власний залізобетонний клас! */
+.activeThumb {
+  opacity: 1 !important;
+  border: 3px solid var(--color-secondary) !important;
 }
-
-/* 3. Картинка просто слухняно лежить всередині обгортки */
 
 .thumbImage {
   width: 100%;

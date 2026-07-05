@@ -16,7 +16,6 @@ export default function CamperReviews({ reviews }: CamperReviewsProps) {
       <ul className={styles.list}>
         {reviews.map((review, index) => (
           <li key={index} className={styles.item}>
-            {/* Обгортка для аватарки та імені з зірочками */}
             <div className={styles.reviewerBlock}>
               <div className={styles.avatar}>
                 {review.reviewer_name.charAt(0).toUpperCase()}
@@ -43,7 +42,6 @@ export default function CamperReviews({ reviews }: CamperReviewsProps) {
               </div>
             </div>
 
-            {/* Коментар іде під усім блоком */}
             <p className={styles.comment}>{review.comment}</p>
           </li>
         ))}

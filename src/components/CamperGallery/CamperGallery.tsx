@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useState } from "react";
-import { FreeMode, Navigation, Thumbs } from "swiper/modules";
+import { FreeMode, Navigation } from "swiper/modules";
 import { Swiper, SwiperSlide } from "swiper/react";
 
 import "swiper/css";
 import "swiper/css/free-mode";
 import "swiper/css/navigation";
-import "swiper/css/thumbs";
 
 import styles from "./CamperGallery.module.css";
 
@@ -25,7 +24,8 @@ export default function CamperGallery({
   gallery,
   coverImage,
 }: CamperGalleryProps) {
-  const [thumbsSwiper, setThumbsSwiper] = useState<any>(null);
+  const [mainSwiper, setMainSwiper] = useState<any>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
 
   if (!gallery?.length && !coverImage) return null;
 
@@ -37,27 +37,23 @@ export default function CamperGallery({
     );
   }
 
-  // Динамічно перевіряємо, чи достатньо слайдів для створення нескінченної петлі
   const canLoopMain = gallery.length > 1;
-  const canLoopThumbs = gallery.length > 4; // Бо slidesPerView дорівнює 4
 
   return (
     <div className={styles.galleryContainer}>
-      {/* --- ГОЛОВНИЙ СЛАЙДЕР --- */}
       <Swiper
+        onSwiper={setMainSwiper}
+        onSlideChange={(swiper) => setActiveIndex(swiper.realIndex)}
         style={
           {
             "--swiper-navigation-color": "#fff",
             "--swiper-pagination-color": "#fff",
           } as React.CSSProperties
         }
-        loop={canLoopMain} // Використовуємо динамічне значення
+        loop={canLoopMain}
         spaceBetween={10}
         navigation={true}
-        thumbs={{
-          swiper: thumbsSwiper && !thumbsSwiper.destroyed ? thumbsSwiper : null,
-        }}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[FreeMode, Navigation]}
         className={styles.mainSwiper}
       >
         {gallery.map((item, index) => (
@@ -71,20 +67,24 @@ export default function CamperGallery({
         ))}
       </Swiper>
 
-      {/* --- НИЖНІЙ СЛАЙДЕР (Мініатюри) --- */}
       <Swiper
-        onSwiper={setThumbsSwiper}
-        loop={canLoopThumbs} // Використовуємо динамічне значення
         spaceBetween={24}
         slidesPerView={4}
         freeMode={true}
-        watchSlidesProgress={true}
-        modules={[FreeMode, Navigation, Thumbs]}
+        modules={[FreeMode, Navigation]}
         className={styles.thumbSwiper}
       >
         {gallery.map((item, index) => (
           <SwiperSlide key={index}>
-            <div className={styles.thumbWrapper}>
+            <div
+              className={`${styles.thumbWrapper} ${activeIndex === index ? styles.activeThumb : ""
+                }`}
+              onClick={() => {
+                if (mainSwiper) {
+                  mainSwiper.slideToLoop(index);
+                }
+              }}
+            >
               <img
                 src={item.thumb}
                 alt={`Thumb ${index + 1}`}

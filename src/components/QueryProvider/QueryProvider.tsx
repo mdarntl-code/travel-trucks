@@ -1,4 +1,3 @@
-// src/providers/QueryProvider.tsx
 "use client";
 
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -9,7 +8,6 @@ export default function QueryProvider({
 }: {
   children: React.ReactNode;
 }) {
-  // Створюємо клієнт один раз, щоб не створювати новий на кожен рендер
   const [queryClient] = useState(() => new QueryClient());
 
   return (
