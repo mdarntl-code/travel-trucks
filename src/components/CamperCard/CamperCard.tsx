@@ -21,6 +21,13 @@ interface CamperProps {
 export default function CamperCard({ camper }: CamperProps) {
   const image = camper.coverImage || "/photo/hero-bg.jpg";
 
+  // Функція-помічник: забирає підкреслення і робить першу літеру великою
+  const formatText = (text: string) => {
+    if (!text) return "";
+    const withSpaces = text.replace(/_/g, " ");
+    return withSpaces.charAt(0).toUpperCase() + withSpaces.slice(1);
+  };
+
   return (
     <article className={styles.card}>
       <div className={styles.imageWrapper}>
@@ -63,19 +70,19 @@ export default function CamperCard({ camper }: CamperProps) {
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-icon2" />
             </svg>
-            {camper.engine}
+            {formatText(camper.engine)}
           </span>
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-icon1" />
             </svg>
-            {camper.transmission}
+            {formatText(camper.transmission)}
           </span>
           <span className={styles.tag}>
             <svg width="20" height="20" aria-hidden="true">
               <use href="/icons/sprite.svg#icon-car" />
             </svg>
-            {camper.form}
+            {formatText(camper.form)}
           </span>
         </div>
 
